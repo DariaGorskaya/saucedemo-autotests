@@ -1,18 +1,13 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from helpers import login
+from test_data import STANDARD_USER_CREDENTIALS
 
 
 def test_login(driver):
-    driver.get("https://www.saucedemo.com/")
-
-    username_input = driver.find_element(By.ID, "user-name")
-    username_input.send_keys("standard_user")
-
-    password_input = driver.find_element(By.ID, "password")
-    password_input.send_keys("secret_sauce")
-
-    driver.find_element(By.ID, "login-button").click()
+    username, password = STANDARD_USER_CREDENTIALS
+    login(driver, username, password)
 
     wait = WebDriverWait(driver, 10)
     wait.until(

@@ -1,7 +1,8 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 
-def login(driver, username, password):
+def login(driver: WebDriver, username: str, password: str) -> None:
     driver.get("https://www.saucedemo.com/")
 
     username_input = driver.find_element(By.ID, "user-name")

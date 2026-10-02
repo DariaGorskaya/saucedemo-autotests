@@ -1,24 +1,26 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.support import expected_conditions as EC  # noqa: N812
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+
 from helpers import login
 from test_data import STANDARD_USER_CREDENTIALS
 
 
-def test_login(driver):
+def test_login(driver: WebDriver) -> None:
     username, password = STANDARD_USER_CREDENTIALS
     login(driver, username, password)
 
     wait = WebDriverWait(driver, 10)
     wait.until(
         EC.url_to_be("https://www.saucedemo.com/inventory.html"),
-        message="Страница с товарами не открылась"
+        message="Страница с товарами не открылась", # noqa: RUF001
     )
     wait.until(
         EC.visibility_of_element_located(
-            (By.CLASS_NAME, "inventory_item_name")
+            (By.CLASS_NAME, "inventory_item_name"),
         ),
-        message="Нет товаров на странице"
+        message="Нет товаров на странице",
     )
 
     products_page_title = driver.find_element(By.CLASS_NAME, "title")

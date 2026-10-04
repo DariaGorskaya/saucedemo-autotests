@@ -6,7 +6,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as EC  # noqa: N812
 from selenium.webdriver.support.ui import WebDriverWait
 
-from helpers import login
+from pages.login_page import LoginPage
 
 
 @pytest.fixture
@@ -23,7 +23,9 @@ def driver() -> Generator[WebDriver, None, None]:
 
 @pytest.fixture
 def logged_in_driver(driver: WebDriver, username: str, password: str) -> WebDriver:
-    login(driver, username, password)
+    login_page = LoginPage(driver)
+    login_page.open()
+    login_page.login(username, password)
 
     wait = WebDriverWait(driver, 10)
     wait.until(

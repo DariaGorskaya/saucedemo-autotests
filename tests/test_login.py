@@ -3,13 +3,15 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as EC  # noqa: N812
 from selenium.webdriver.support.ui import WebDriverWait
 
-from helpers import login
+from pages.login_page import LoginPage
 from test_data import STANDARD_USER_CREDENTIALS
 
 
 def test_login(driver: WebDriver) -> None:
     username, password = STANDARD_USER_CREDENTIALS
-    login(driver, username, password)
+    login_page = LoginPage(driver)
+    login_page.open()
+    login_page.login(username, password)
 
     wait = WebDriverWait(driver, 10)
     wait.until(

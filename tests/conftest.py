@@ -3,9 +3,8 @@ from collections.abc import Generator
 import pytest
 from selenium import webdriver
 from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.support import expected_conditions as EC  # noqa: N812
-from selenium.webdriver.support.ui import WebDriverWait
 
+from pages.inventory_page import InventoryPage
 from pages.login_page import LoginPage
 
 
@@ -27,9 +26,7 @@ def logged_in_driver(driver: WebDriver, username: str, password: str) -> WebDriv
     login_page.open()
     login_page.login(username, password)
 
-    wait = WebDriverWait(driver, 10)
-    wait.until(
-        EC.url_to_be("https://www.saucedemo.com/inventory.html"),
-        message="Страница с товарами не открылась", # noqa: RUF001
-    )
+    inventory_page = InventoryPage(driver)
+    inventory_page.wait_until_loaded()
+
     return driver
